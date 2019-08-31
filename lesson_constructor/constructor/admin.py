@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import TeachingMethod, LessonPart
 
-# Register your models here.
+
+admin.site.register(TeachingMethod)
+admin.site.register(LessonPart)

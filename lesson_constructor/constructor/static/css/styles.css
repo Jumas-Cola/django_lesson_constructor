@@ -1,0 +1,12 @@
+.collapsing {
+  transition: none !important;
+}
+
+#add_rem {
+  cursor: pointer;
+  color: #007bff;
+}
+
+#add_rem:hover {
+  color: #0056b3;
+}

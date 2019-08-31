@@ -24,7 +24,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/catalog/', permanent=True)),
+    path('', RedirectView.as_view(url='/constructor/', permanent=True)),
     path('admin/', admin.site.urls),
     path('constructor/', include('constructor.urls')),
     url(r'^accounts/', include('django.contrib.auth.urls')),

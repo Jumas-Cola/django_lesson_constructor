@@ -1,0 +1,78 @@
+{% extends "base_generic.html" %}
+
+{% load static %}
+{% block additional_js %}
+  <script type="text/javascript" src="{% static 'js/html5sortable.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/FileSaver.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+
+{% block title %}<title>Lesson Constructor</title>{% endblock %}
+
+{% block content %}
+<div class="container p-3">
+  <h1>Конструктор уроков</h1>
+  <p>Предлагаемые приемы педагогической техники могут быть успешно использованы в любой предметной области, так как являются универсальными. Легко встраиваются в уроки любого типа и могут быть использованы на разных этапах урока. Используемые в
+    работе элементы «Конструктора урока» (автор Анатолий Гин) могут быть дополнены личными находками учителя.</p>
+</div>
+
+
+<section class="container row m-3 ml-auto mr-auto">
+
+  <section class="container card_collapse col-12 col-md-6">
+
+    <!--Разделы урока-->
+    <section class="border-bottom row pb-2 col-md-12">
+      {% if lesson_parts %}
+      {% for part in lesson_parts %}
+      <button class="btn btn-secondary m-1" type="button" data-toggle="collapse" data-target="#multiCollapse{{ part.id }}" aria-expanded="true" aria-controls="multiCollapseExample{{ part.id }}" onclick="closeItems()">{{ part.id }}. {{ part.name }}</button>
+      {% endfor %}
+      {% endif %}
+    </section>
+
+    <!--Наполнение разделов-->
+    <section class="mb-2">
+      {% for part, methods in parts_with_items.items %}
+      <section class="multi-collapse collapse {% if forloop.first %}show{% endif %}" id="multiCollapse{{ part.id }}">
+        <section class="m-1 mb-3 p-1 font-weight-bold">{{ part.description }}</section>
+        <ul class="list-unstyled">
+          {% for method in methods %}
+          <li class="card mb-1">
+            <div class="card-body p-2" id="{{ method.id }}">
+              <h5 class="card-title">{{ method.title }}</h5>
+              <p class="card-text">{{ method.description|slice:"0:200" }}...</p>
+              <section class="full_text" hidden="true">{{ method.title }}
+{{ method.description }}
+
+</section>
+              <a href="{% url 'method_detail' method.id %}" class="card-link" target="_blank">Подробнее</a>
+              <a id="add_rem" class="card-link" onclick="appendToList(this.parentNode.parentNode.innerHTML);">Добавить в список</a>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endfor %}
+    </section>
+
+  </section>
+
+
+
+  <div class="col-md-6" id="lesson_list">
+    <h2>План урока</h2>
+    <ul class="js-sortable sortable list flex flex-column list-reset list-unstyled">
+
+    </ul>
+    <section class="d-flex justify-content-end">
+      <button id="save_btn" class="btn btn-secondary" onclick="saveDoc();" hidden>Скачать</button>
+    </section>
+  </div>
+
+</section>
+
+<section class="container">
+  <hr class="featurette-divider m-5">
+</section>
+
+{% endblock %}
