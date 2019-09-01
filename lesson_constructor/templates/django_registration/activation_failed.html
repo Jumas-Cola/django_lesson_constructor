@@ -1,0 +1,9 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+
+{% block title %}Не удалось активировать аккаунт{% endblock %}
+
+{% block content %}
+  <section>Ваш аккаунт не активирован:</section>
+  <section>"{{ activation_error.message }}"</section>
+{% endblock %}

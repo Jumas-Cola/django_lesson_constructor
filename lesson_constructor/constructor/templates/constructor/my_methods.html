@@ -1,16 +1,23 @@
 {% extends "base_generic.html" %}
 
-
 {% load static %}
 {% block additional_js %}
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
   <script type="text/javascript" src="{% static 'js/html5sortable.js' %}"></script>
+{% endblock %}
+
+{% block additional_after_all_js %}
   <script type="text/javascript" src="{% static 'js/FileSaver.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 {% endblock %}
 
-{% block title %}<title>Lesson Constructor</title>{% endblock %}
+{% block title %}Lesson Constructor{% endblock %}
 
 {% block content %}
+<div class="container p-3">
+  <a class="btn btn-primary" href="{% url 'method_create' %}?next={{request.path}}">Добавить новый метод</a>
+</div>
+
 <section class="container row m-3 ml-auto mr-auto">
 
   <section class="container card_collapse col-12 col-md-6">
@@ -41,6 +48,12 @@
 </section>
               <a href="{% url 'method_detail' method.id %}" class="card-link" target="_blank">Подробнее</a>
               <a id="add_rem" class="card-link" onclick="appendToList(this.parentNode.parentNode.innerHTML);">Добавить в список</a>
+
+              <p id="manage_methods">
+                <a class="card-link" href="{% url 'method_update' method.id %}?next={{request.path}}">Изменить</a>
+                <a class="card-link" href="{% url 'method_delete' method.id %}?next={{request.path}}">Удалить</a>
+              </p>
+
             </div>
           </li>
           {% endfor %}

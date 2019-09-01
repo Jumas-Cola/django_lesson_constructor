@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container p-3">
+  <h1>Удалить метод</h1>
+  <p>Действительно ли вы хотите удалить данный метод: "{{ teachingmethod }}" ?</p>
+</div>
+
+<section class="container row m-3 ml-auto mr-auto">
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" action="" value="Да, удалить." />
+  </form>
+</section>
+
+{% endblock %}

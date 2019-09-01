@@ -1,9 +1,16 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+import uuid
 
 
 class TeachingMethod(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        help_text="Уникальное ID для данного метода"
+    )
+
     title = models.CharField(
         max_length=1000,
         help_text="Название педагогического приёма"

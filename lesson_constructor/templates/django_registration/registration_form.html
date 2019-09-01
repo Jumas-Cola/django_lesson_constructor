@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+{% load i18n %}
+
+{% block title %}<title>Регистрация</title>{% endblock %}
+
+{% block content %}
+<section class="container m-3 ml-auto mr-auto">
+  <form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Отправить" />
+  </form>
+</section>
+{% endblock %}

@@ -2,12 +2,16 @@
 
 {% load static %}
 {% block additional_js %}
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
   <script type="text/javascript" src="{% static 'js/html5sortable.js' %}"></script>
+{% endblock %}
+
+{% block additional_after_all_js %}
   <script type="text/javascript" src="{% static 'js/FileSaver.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 {% endblock %}
 
-{% block title %}<title>Lesson Constructor</title>{% endblock %}
+{% block title %}Lesson Constructor{% endblock %}
 
 {% block content %}
 <div class="container p-3">

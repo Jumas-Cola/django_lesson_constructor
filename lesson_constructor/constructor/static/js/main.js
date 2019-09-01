@@ -6,6 +6,10 @@ function appendToList(html) {
   newli.setAttribute("role", "option");
   newli.setAttribute("aria-grabbed", "false");
   newli.innerHTML = html;
+  manage_methods = newli.querySelector("#manage_methods");
+  if (manage_methods) {
+    manage_methods.remove();
+  }
   var add_rem = newli.querySelector('#add_rem');
   add_rem.text = "Удалить из списка";
   add_rem.setAttribute("onclick", "this.parentNode.parentNode.remove();checkDownlBtn();");
