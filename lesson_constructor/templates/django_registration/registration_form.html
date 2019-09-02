@@ -1,7 +1,12 @@
 {% extends "base_generic.html" %}
 {% load i18n %}
 
-{% block title %}<title>Регистрация</title>{% endblock %}
+{% load static %}
+{% block additional_after_all_js %}
+<script type="text/javascript" src="{% static 'js/form.js' %}"></script>
+{% endblock %}
+
+{% block title %}Регистрация{% endblock %}
 
 {% block content %}
 <section class="container m-3 ml-auto mr-auto">

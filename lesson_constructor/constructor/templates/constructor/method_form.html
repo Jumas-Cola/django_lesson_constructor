@@ -3,6 +3,7 @@
 {% load static %}
 {% block additional_after_all_js %}
 <script type="text/javascript" src="{% static 'js/method_form.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/form.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -12,7 +13,10 @@
     <table>
       {{ form }}
     </table>
-    <input type="submit" value="Отправить" />
+
+    <div class="form-group">
+      <input type="submit" value="Отправить" />
+    </div>
   </form>
 </section>
 {% endblock %}
