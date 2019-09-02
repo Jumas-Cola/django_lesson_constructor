@@ -42,14 +42,13 @@ function closeItems() {
   }
 }
 
-
-function saveDoc() {
-  var text = $(document.querySelectorAll('#lesson_list > ul > li > .card-body > .full_text')).text();
-  var filename = "lesson_list.doc";
-  var blob = new Blob([text], {
-    type: "text/plain;charset=utf-8"
-  });
-  saveAs(blob, filename);
+function download() {
+  let ids_list = JSON.stringify($("#lesson_list .method_id").map(function() {
+    return $.trim($(this).text());
+  }).get());
+  $("#ids").attr("value", ids_list);
+  $("#ids_list").submit();
+  $("#ids").attr("value", "");
 }
 
 function checkDownlBtn() {

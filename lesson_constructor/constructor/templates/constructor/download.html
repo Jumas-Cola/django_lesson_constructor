@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  {% block title %}Download{% endblock %}
+  <meta charset="utf-8">
+</head>
+
+<body>{% for method in methods %}{{ method.title }}<br>
+{{ method.description }}<br>
+<br>
+{% endfor %}</body>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'js/FileSaver.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/download.js' %}"></script>

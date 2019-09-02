@@ -5,13 +5,16 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.urls import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 
-import datetime
+from docx import Document
+import os
+import json
+from datetime import date
 from .models import TeachingMethod, LessonPart
 
 
@@ -108,3 +111,28 @@ class MethodCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+def download(request):
+    ids_json = request.POST.get('ids')
+    ids = json.loads(ids_json)
+    document = Document()
+    docx_title = "lesson_plan_{}.docx".format(date.today())
+    # ---- Cover Letter ----
+    document.add_heading('План урока', 0)
+
+    for id in ids:
+        method = TeachingMethod.objects.get(pk=id)
+        document.add_heading(method.title, level=2)
+        document.add_paragraph(method.description)
+    document.add_page_break()
+    document.save(docx_title)
+
+    file_path = os.path.realpath(docx_title)
+    data = open(file_path, "rb").read()
+    response = HttpResponse(data, content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response['Content-Disposition'] = 'attachment; filename=' + docx_title
+    response['Content-Length'] = os.path.getsize(file_path)
+    os.remove(file_path)
+
+    return response

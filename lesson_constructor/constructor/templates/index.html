@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block additional_after_all_js %}
-  <script type="text/javascript" src="{% static 'js/FileSaver.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 {% endblock %}
 
@@ -45,10 +44,7 @@
             <div class="card-body p-2" id="{{ method.id }}">
               <h5 class="card-title">{{ method.title }}</h5>
               <p class="card-text">{{ method.description|slice:"0:200" }}...</p>
-              <section class="full_text" hidden="true">{{ method.title }}
-{{ method.description }}
-
-</section>
+              <section class="method_id" hidden="true">{{ method.id }}</section>
               <a href="{% url 'method_detail' method.id %}" class="card-link" target="_blank">Подробнее</a>
               <a id="add_rem" class="card-link" onclick="appendToList(this.parentNode.parentNode.innerHTML);">Добавить в список</a>
             </div>
@@ -69,7 +65,11 @@
 
     </ul>
     <section class="d-flex justify-content-end">
-      <button id="save_btn" class="btn btn-secondary" onclick="saveDoc();" hidden>Скачать</button>
+      <button id="save_btn" class="btn btn-secondary" onclick="download()" hidden>Скачать</button>
+      <form id="ids_list" action="{% url 'download' %}" method="post">
+        {% csrf_token %}
+        <input id="ids" type="hidden" name="ids" value="">
+      </form>
     </section>
   </div>
 
