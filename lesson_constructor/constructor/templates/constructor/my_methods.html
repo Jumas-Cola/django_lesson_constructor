@@ -13,13 +13,11 @@
 {% block title %}Lesson Constructor{% endblock %}
 
 {% block content %}
-<div class="container p-3">
-  <a class="btn btn-primary" href="{% url 'method_create' %}?next={{request.path}}">Добавить новый метод</a>
-</div>
-
-<section class="container row m-3 ml-auto mr-auto">
+<section class="container row mt-md-5 m-3 ml-auto mr-auto">
 
   <section class="container card_collapse col-12 col-md-6">
+
+    <a class="btn btn-primary m-1" href="{% url 'method_create' %}?next={{request.path}}">Добавить новый метод</a>
 
     <!--Разделы урока-->
     <section class="border-bottom row pb-2 col-md-12">

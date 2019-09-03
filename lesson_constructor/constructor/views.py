@@ -14,8 +14,9 @@ from django.contrib.auth.models import User
 from docx import Document
 import os
 import json
+import uuid
 from datetime import date
-from .models import TeachingMethod, LessonPart
+from .models import TeachingMethod, LessonPart, Comment
 
 
 def index(request):
@@ -59,10 +60,17 @@ def my_methods(request, pk):
         },
     )
 
+from django.views.generic.list import MultipleObjectMixin
 
-class MethodDetailView(generic.DetailView):
+class MethodDetailView(generic.DetailView, MultipleObjectMixin):
     model = TeachingMethod
     template_name = 'constructor/method_detail.html'
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        object_list = Comment.objects.filter(method=self.get_object())
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        return context
 
     # def get_object(self, queryset=None):
     #     obj = super().get_object()
@@ -113,6 +121,20 @@ class MethodCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+class MethodCopy(LoginRequiredMixin, UpdateView):
+    model = TeachingMethod
+    template_name = 'constructor/method_form.html'
+    fields = ('title', 'description', 'lesson_part')
+
+    def get_success_url(self):
+        return self.request.GET['next']
+
+    def form_valid(self, form):
+        form.instance.id = uuid.uuid4()
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
 def download(request):
     ids_json = request.POST.get('ids')
     ids = json.loads(ids_json)
@@ -136,3 +158,21 @@ def download(request):
     os.remove(file_path)
 
     return response
+
+class CommentCreate(LoginRequiredMixin, CreateView):
+    model = Comment
+    fields = ('text',)
+
+    def get_success_url(self):
+        return reverse_lazy('method_detail', kwargs={'pk': self.kwargs['pk']})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['method'] = get_object_or_404(TeachingMethod, pk=self.kwargs['pk'])
+        context['pk'] = self.kwargs['pk']
+        return context
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.method = get_object_or_404(TeachingMethod, pk=self.kwargs['pk'])
+        return super().form_valid(form)

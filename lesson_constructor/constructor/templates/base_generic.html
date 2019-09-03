@@ -17,26 +17,26 @@
 
 <body>
   {% block navbar %}
-  <ul class="nav justify-content-end nav-tabs">
+  <ul class="nav justify-content-end nav-tabs bg-info">
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'index' %}">На главную</a>
+      <a class="nav-link text-white" href="{% url 'index' %}">На главную</a>
     </li>
     {% if user.is_authenticated %}
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'my_methods' user.id %}">Мои педагогические приёмы</a>
+      <a class="nav-link text-white" href="{% url 'my_methods' user.id %}">Мои педагогические приёмы</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
+      <a class="nav-link text-white" href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link disabled">User: {{ user.get_username }}</a>
+      <a class="nav-link text-white disabled">User: {{ user.get_username }}</a>
     </li>
     {% else %}
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'django_registration_register' %}">Зарегистрироваться</a>
+      <a class="nav-link text-white" href="{% url 'django_registration_register' %}">Зарегистрироваться</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{% url 'login' %}?next={{request.path}}">Войти</a>
+      <a class="nav-link text-white" href="{% url 'login' %}?next={{request.path}}">Войти</a>
     </li>
     {% endif %}
   </ul>
@@ -46,23 +46,25 @@
     <div>
       {% block content %}{% endblock %}
 
-      {% block pagination %}
-      {% if is_paginated %}
-      <div class="pagination">
-        <span class="page-links">
-          {% if page_obj.has_previous %}
-          <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-          {% endif %}
-          <span class="page-current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      <div class="container mt-4">
+        {% block pagination %}
+        {% if is_paginated %}
+        <div class="pagination">
+          <span class="page-links">
+            {% if page_obj.has_previous %}
+            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">назад</a>
+            {% endif %}
+            <span class="page-current">
+              Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">вперёд</a>
+            {% endif %}
           </span>
-          {% if page_obj.has_next %}
-          <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
-          {% endif %}
-        </span>
+        </div>
+        {% endif %}
+        {% endblock %}
       </div>
-      {% endif %}
-      {% endblock %}
     </div>
   </div>
 

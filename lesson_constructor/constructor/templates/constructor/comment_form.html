@@ -10,13 +10,11 @@
 <section class="container mt-md-5 m-3 ml-auto mr-auto">
   <form action="" method="post">
     {% csrf_token %}
+    <p>Коментарий к записи: <a href="{% url 'method_detail' pk %}">{{ method.title }}</a></p>
     <table>
-      {{ form }}
+      {{ form.as_p }}
     </table>
-
-    <div class="form-group">
-      <input type="submit" value="Отправить" />
-    </div>
+    <input type="submit" value="Отправить" />
   </form>
 </section>
 {% endblock %}
