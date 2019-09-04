@@ -64,7 +64,12 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     method = models.ForeignKey(TeachingMethod, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    text = models.TextField(max_length=5000)
+    modified = models.DateTimeField(auto_now=True)
+    is_modified = models.BooleanField(default=False)
+    text = models.TextField(
+        max_length=5000,
+        verbose_name='Текст'
+    )
 
     def __str__(self):
         len_title = 75
@@ -76,3 +81,5 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['created']
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'

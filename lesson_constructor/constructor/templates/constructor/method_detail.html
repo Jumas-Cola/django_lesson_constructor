@@ -16,18 +16,34 @@
 
   <div class="ml-2 mt-2">
     <h5>Комментарии</h5>
-    <hr>
 
-    {% for comment in object_list %}
-    <p>{{ comment.author }} ({{ comment.created }}) - {{ comment.text }}</p>
-    <hr>
-    {% endfor %}
+    <ul class="list-group list-group-flush">
+      {% for comment in object_list %}
+      <li class="list-group-item">
+        <section>
+          {% if comment.author == user %}
+          <section class="close">
+            <a href="{% url 'comment_delete' pk=comment.id id=object.id %}?next={{request.path}}">&times;</a>
+          </section>
+          <section class="close mr-2">
+            <a href="{% url 'comment_update' pk=comment.id id=object.id %}?next={{request.path}}" style="font-size: 14px;">🖊</a>
+          </section>
+          {% endif %}
 
-    {% if user.is_authenticated %}
-    <a class="btn btn-secondary" href="{% url 'comment_create' object.id %}">Комментировать</a>
-    {% else %}
-    <a href="{% url 'login' %}">Войдите</a>, чтобы комментировать
-    {% endif %}
+          <section class="my-0" id="comment_text">{{ comment.text|linebreaks }}</section>
+          <small class="text-muted">{{ comment.author }} ({{ comment.created }}) {% if comment.is_modified %}Изменено: {{ comment.modified }}{% endif %}</small>
+        </section>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <section class="mt-3">
+      {% if user.is_authenticated %}
+      <a class="btn btn-secondary" href="{% url 'comment_create' object.id %}">Комментировать</a>
+      {% else %}
+      <a href="{% url 'login' %}">Войдите</a>, чтобы комментировать
+      {% endif %}
+    </section>
   </div>
 </div>
 {% endblock %}

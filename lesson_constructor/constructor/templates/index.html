@@ -37,7 +37,7 @@
     <section class="mb-2">
       {% for part, methods in parts_with_items.items %}
       <section class="multi-collapse collapse {% if forloop.first %}show{% endif %}" id="multiCollapse{{ part.id }}">
-        <section class="m-1 mb-3 p-1 font-weight-bold">{{ part.description }}</section>
+        <section class="m-1 mb-3 p-1 font-weight-bold">{{ part.description|linebreaks }}</section>
         <ul class="list-unstyled">
           {% for method in methods %}
           <li class="card mb-1">

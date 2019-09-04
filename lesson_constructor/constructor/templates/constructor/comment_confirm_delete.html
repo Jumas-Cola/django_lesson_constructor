@@ -8,8 +8,9 @@
 
 {% block content %}
 <div class="container p-3">
-  <h1>Удалить метод</h1>
-  <p>Действительно ли вы хотите удалить данный метод: "{{ teachingmethod }}" ?</p>
+  <h1>Удалить комментарий</h1>
+  <p>Действительно ли вы хотите удалить данный комментарий ?</p>
+  <section id="comment_text">"{{ comment.text|linebreaks }}"</section>
 </div>
 
 <section class="container row m-3 ml-auto mr-auto">

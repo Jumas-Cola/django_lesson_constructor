@@ -10,7 +10,7 @@
 <section class="container mt-md-5 m-3 ml-auto mr-auto">
   <form action="" method="post">
     {% csrf_token %}
-    <p>Коментарий к записи: <a href="{% url 'method_detail' pk %}">{{ method.title }}</a></p>
+    <p>Коментарий к записи: <a href="{% url 'method_detail' method_pk %}">{{ method.title }}</a></p>
     <table>
       {{ form.as_p }}
     </table>

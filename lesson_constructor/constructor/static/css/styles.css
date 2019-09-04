@@ -10,3 +10,7 @@
 #add_rem:hover {
   color: #0056b3;
 }
+
+#comment_text {
+  word-wrap: break-word;
+}

@@ -1,15 +1,22 @@
 from django.shortcuts import render
-from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect, Http404, HttpResponse
-from django.urls import reverse
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.mixins import PermissionRequiredMixin
+# from django.contrib.auth.decorators import permission_required
+# from django.contrib.auth.models import User
+
+from django.http import HttpResponse
+from django.http import Http404
+# from django.http import HttpResponseRedirect
+
+from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.list import MultipleObjectMixin
+
 from django.urls import reverse_lazy
-from django.contrib.auth.models import User
+# from django.urls import reverse
 
 from docx import Document
 import os
@@ -60,7 +67,6 @@ def my_methods(request, pk):
         },
     )
 
-from django.views.generic.list import MultipleObjectMixin
 
 class MethodDetailView(generic.DetailView, MultipleObjectMixin):
     model = TeachingMethod
@@ -159,6 +165,7 @@ def download(request):
 
     return response
 
+
 class CommentCreate(LoginRequiredMixin, CreateView):
     model = Comment
     fields = ('text',)
@@ -169,10 +176,47 @@ class CommentCreate(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['method'] = get_object_or_404(TeachingMethod, pk=self.kwargs['pk'])
-        context['pk'] = self.kwargs['pk']
+        context['method_pk'] = self.kwargs['pk']
         return context
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         form.instance.method = get_object_or_404(TeachingMethod, pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
+
+class CommentDelete(LoginRequiredMixin, DeleteView):
+    model = Comment
+
+    def get_success_url(self):
+        return self.request.GET['next']
+
+    def get_object(self, queryset=None):
+        obj = super().get_object()
+        if not obj.author == self.request.user:
+            raise Http404
+        return obj
+
+
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    model = Comment
+    fields = ('text',)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['method'] = get_object_or_404(TeachingMethod, pk=self.kwargs['id'])
+        context['method_pk'] = self.kwargs['id']
+        return context
+
+    def get_success_url(self):
+        return self.request.GET['next']
+
+    def get_object(self, queryset=None):
+        obj = super().get_object()
+        if not obj.author == self.request.user:
+            raise Http404
+        return obj
+
+    def form_valid(self, form):
+        form.instance.is_modified = True
         return super().form_valid(form)
