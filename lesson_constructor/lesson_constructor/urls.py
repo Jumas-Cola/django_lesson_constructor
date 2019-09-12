@@ -24,9 +24,10 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/constructor/', permanent=True)),
+    # path('', RedirectView.as_view(url='/constructor/', permanent=True)),
     path('admin/', admin.site.urls),
     path('constructor/', include('constructor.urls')),
+    path('blog/', include('blog.urls')),
     url(r'^accounts/', include('django_registration.backends.activation.urls')),
     url(r'^accounts/', include('django.contrib.auth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
