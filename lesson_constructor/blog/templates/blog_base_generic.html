@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>{% block title %}Lesson Constructor{% endblock %}</title>
+  <title>{% block title %}Blog{% endblock %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -17,17 +17,14 @@
 
 <body>
   {% block navbar %}
-  <ul class="nav justify-content-end nav-tabs bg-info">
+  <ul class="nav justify-content-end nav-tabs bg-secondary">
     <li class="nav-item">
       <a class="nav-link text-white" href="{% url 'main' %}">К выбору раздела</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link text-white" href="{% url 'index' %}">На главную</a>
+      <a class="nav-link text-white" href="{% url 'blog_index' %}">На главную</a>
     </li>
     {% if user.is_authenticated %}
-    <li class="nav-item">
-      <a class="nav-link text-white" href="{% url 'my_methods' user.id %}">Мои педагогические приёмы</a>
-    </li>
     <li class="nav-item">
       <a class="nav-link text-white" href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
     </li>

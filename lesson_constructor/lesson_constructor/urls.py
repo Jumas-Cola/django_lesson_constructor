@@ -18,6 +18,7 @@ from django.urls import path
 from django.urls import include
 from django.views.generic import RedirectView
 from django.conf.urls import url
+from . import views
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,6 +26,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # path('', RedirectView.as_view(url='/constructor/', permanent=True)),
+    path('', views.main, name='main'),
     path('admin/', admin.site.urls),
     path('constructor/', include('constructor.urls')),
     path('blog/', include('blog.urls')),

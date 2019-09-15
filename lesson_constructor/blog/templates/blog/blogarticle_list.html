@@ -1,0 +1,25 @@
+{% extends "blog_base_generic.html" %}
+
+{% block content %}
+
+<div class="container mt-md-5 p-3">
+  <h1>Все статьи</h1>
+</div>
+
+<section class="container row m-3 ml-auto mr-auto">
+  {% if blogarticle_list %}
+  <ul>
+
+    {% for blogarticle in blogarticle_list %}
+    <li>
+      <a href="№">{{ blogarticle.title }}</a> ({{ blogarticle.created|date:"M. d, Y" }}) - <a href="{{ blogarticle.author.get_absolute_url }}">{{ blogarticle.author }}</a>
+      <div>{{ blogarticle.preview }}</div>
+    </li>
+    {% endfor %}
+
+  </ul>
+  {% else %}
+  <p>Здесь ещё нет статей.</p>
+  {% endif %}
+</section>
+{% endblock %}

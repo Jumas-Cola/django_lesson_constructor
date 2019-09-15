@@ -68,7 +68,7 @@ class Comment(models.Model):
     is_modified = models.BooleanField(default=False)
     text = models.TextField(
         max_length=5000,
-        verbose_name='Текст'
+        verbose_name='Текст комментария'
     )
 
     def __str__(self):
