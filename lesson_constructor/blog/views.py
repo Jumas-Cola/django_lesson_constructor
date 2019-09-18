@@ -28,7 +28,7 @@ class BlogArticleDetailView(generic.DetailView, MultipleObjectMixin):
     model = BlogArticle
 
     def get_context_data(self, **kwargs):
-        object_list = BlogComment.objects.filter(method=self.get_object())
+        object_list = BlogComment.objects.filter(article=self.get_object())
         context = super().get_context_data(object_list=object_list, **kwargs)
         return context
 
@@ -38,17 +38,17 @@ class BlogCommentCreate(LoginRequiredMixin, CreateView):
     fields = ('text',)
 
     def get_success_url(self):
-        return reverse_lazy('method_detail', kwargs={'pk': self.kwargs['pk']})
+        return reverse_lazy('article_detail', kwargs={'pk': self.kwargs['pk']})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['method'] = get_object_or_404(BlogArticle, pk=self.kwargs['pk'])
-        context['method_pk'] = self.kwargs['pk']
+        context['article'] = get_object_or_404(BlogArticle, pk=self.kwargs['pk'])
+        context['article_pk'] = self.kwargs['pk']
         return context
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        form.instance.method = get_object_or_404(BlogArticle, pk=self.kwargs['pk'])
+        form.instance.article = get_object_or_404(BlogArticle, pk=self.kwargs['pk'])
         return super().form_valid(form)
 
 
@@ -71,8 +71,8 @@ class BlogCommentUpdate(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['method'] = get_object_or_404(BlogArticle, pk=self.kwargs['id'])
-        context['method_pk'] = self.kwargs['id']
+        context['article'] = get_object_or_404(BlogArticle, pk=self.kwargs['id'])
+        context['article_pk'] = self.kwargs['id']
         return context
 
     def get_success_url(self):

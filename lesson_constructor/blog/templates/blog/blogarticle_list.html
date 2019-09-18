@@ -12,7 +12,7 @@
 
     {% for blogarticle in blogarticle_list %}
     <li>
-      <a href="№">{{ blogarticle.title }}</a> ({{ blogarticle.created|date:"M. d, Y" }}) - <a href="{{ blogarticle.author.get_absolute_url }}">{{ blogarticle.author }}</a>
+      <a href="{{ blogarticle.id }}">{{ blogarticle.title }}</a> ({{ blogarticle.created|date:"M. d, Y" }}) - <a href="{{ blogarticle.author.get_absolute_url }}">{{ blogarticle.author }}</a>
       <div>{{ blogarticle.preview }}</div>
     </li>
     {% endfor %}

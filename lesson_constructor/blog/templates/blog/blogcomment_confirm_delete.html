@@ -1,0 +1,23 @@
+{% extends "blog_base_generic.html" %}
+
+{% load static %}
+{% block additional_after_all_js %}
+<script type="text/javascript" src="{% static 'js/method_form.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/form.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container p-3">
+  <h1>Удалить комментарий</h1>
+  <p>Действительно ли вы хотите удалить данный комментарий ?</p>
+  <section id="comment_text">"{{ blogcomment.text|linebreaks }}"</section>
+</div>
+
+<section class="container row m-3 ml-auto mr-auto">
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" action="" value="Да, удалить." />
+  </form>
+</section>
+
+{% endblock %}

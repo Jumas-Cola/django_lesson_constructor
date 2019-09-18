@@ -37,7 +37,7 @@ class BlogArticle(models.Model):
 
 class BlogComment(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    method = models.ForeignKey(BlogArticle, on_delete=models.CASCADE)
+    article = models.ForeignKey(BlogArticle, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     is_modified = models.BooleanField(default=False)

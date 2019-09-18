@@ -1,0 +1,20 @@
+{% extends "blog_base_generic.html" %}
+
+{% load static %}
+{% block additional_after_all_js %}
+<script type="text/javascript" src="{% static 'js/method_form.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/form.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<section class="container mt-md-5 m-3 ml-auto mr-auto">
+  <form action="" method="post">
+    {% csrf_token %}
+    <p>Коментарий к записи: <a href="{% url 'article_detail' article_pk %}">{{ article.title }}</a></p>
+    <table>
+      {{ form.as_p }}
+    </table>
+    <input type="submit" value="Отправить" />
+  </form>
+</section>
+{% endblock %}

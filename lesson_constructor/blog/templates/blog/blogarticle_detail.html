@@ -16,10 +16,10 @@
         <section>
           {% if comment.author == user %}
           <section class="close">
-            <a href="{% url 'comment_delete' pk=comment.id id=object.id %}?next={{request.path}}">&times;</a>
+            <a href="{% url 'blogcomment_delete' pk=comment.id id=object.id %}?next={{request.path}}">&times;</a>
           </section>
           <section class="close mr-2">
-            <a href="{% url 'comment_update' pk=comment.id id=object.id %}?next={{request.path}}" style="font-size: 14px;">🖊</a>
+            <a href="{% url 'blogcomment_update' pk=comment.id id=object.id %}?next={{request.path}}" style="font-size: 14px;">🖊</a>
           </section>
           {% endif %}
 
