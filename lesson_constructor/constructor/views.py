@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 
+from django.contrib.auth.models import User
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -46,10 +48,11 @@ def index(request):
     )
 
 
-@login_required
+# @login_required
 def my_methods(request, pk):
-    if request.user.id != int(pk):
-        raise Http404
+    # if request.user.id != int(pk):
+    #     raise Http404
+    author = get_object_or_404(User, pk=pk)
     parts_with_items = {}
     lesson_parts = LessonPart.objects.all()
     for part in lesson_parts:
@@ -64,6 +67,7 @@ def my_methods(request, pk):
         context={
             'parts_with_items': parts_with_items,
             'lesson_parts': lesson_parts,
+            'author': author,
         },
     )
 
