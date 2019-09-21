@@ -3,7 +3,12 @@
 {% block content %}
 
 <div class="container mt-md-5 p-3">
-  <h1>Все статьи</h1>
+  <h1>Статьи{% if request.GET.search %} по запросу "{{ request.GET.search }}"{% endif %}</h1>
+  <form method='GET'>
+    {{ form }}
+    <input class="btn btn-primary" type='submit' value="Поиск">
+    <a href="{% url 'articles' %}" class="btn btn-secondary">Все статьи</a>
+  </form>
 </div>
 
 <section class="container row m-3 ml-auto mr-auto">
@@ -11,8 +16,8 @@
   <ul>
 
     {% for blogarticle in blogarticle_list %}
-    <li>
-      <a href="{{ blogarticle.id }}">{{ blogarticle.title }}</a> ({{ blogarticle.created|date:"M. d, Y" }}) - <a href="{{ blogarticle.author.get_absolute_url }}">{{ blogarticle.author }}</a>
+    <li class="mb-3">
+      <a href="{{ blogarticle.id }}">{{ blogarticle.title }}</a> ({{ blogarticle.created|date:"M. d, Y" }}) - <a href="{% url 'user_detail' blogarticle.author.id %}">{{ blogarticle.author }}</a>
       <div>{{ blogarticle.preview }}</div>
     </li>
     {% endfor %}

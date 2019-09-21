@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^articles/(?P<pk>\d+)/comment$', views.BlogCommentCreate.as_view(), name='blogcomment_create'),
     url(r'^articles/(?P<id>[-\w]+)/comment/(?P<pk>\d+)/update/$', views.BlogCommentUpdate.as_view(), name='blogcomment_update'),
     url(r'^articles/(?P<id>[-\w]+)/comment/(?P<pk>\d+)/delete/$', views.BlogCommentDelete.as_view(), name='blogcomment_delete'),
+    url(r'^articles/id(?P<pk>\d+)$', views.user_articles, name='user_articles'),
 ]

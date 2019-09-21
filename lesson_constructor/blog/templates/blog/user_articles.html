@@ -1,0 +1,25 @@
+{% extends "blog_base_generic.html" %}
+
+{% block content %}
+
+<div class="container mt-md-5 p-3">
+  <h1>Статьи пользователя: {{ author.username }}</h1>
+</div>
+
+<section class="container row m-3 ml-auto mr-auto">
+  {% if page_obj %}
+  <ul>
+
+    {% for article in page_obj %}
+    <li class="mb-3">
+      <a href="{{ article.id }}">{{ article.title }}</a> ({{ article.created|date:"M. d, Y" }}) - <a href="{% url 'user_detail' article.author.id %}">{{ article.author }}</a>
+      <div>{{ article.preview }}</div>
+    </li>
+    {% endfor %}
+
+  </ul>
+  {% else %}
+  <p>Здесь ещё нет статей.</p>
+  {% endif %}
+</section>
+{% endblock %}
